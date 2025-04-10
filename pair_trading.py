@@ -8,12 +8,12 @@ rio_data = yf.Ticker('RIO.AX')
 bhp_open = bhp_data.history(start="2025-01-01", end="2025-04-09", interval="1d")[["Open", "Close"]]
 rio_open = rio_data.history(start="2025-01-01", end="2025-04-09", interval="1d")[["Open", "Close"]]
 
-# Write to text files
-with open("BHP.txt", "w") as bhp_file:
-    bhp_open.to_csv("BHP.csv", header=True)
+# # Write to text files
+# with open("BHP.txt", "w") as bhp_file:
+#     bhp_open.to_csv("BHP.csv", header=True)
 
-with open("RIO.txt", "w") as rio_file:
-    rio_open.to_csv("RIO.csv", header=True)
+# with open("RIO.txt", "w") as rio_file:
+#     rio_open.to_csv("RIO.csv", header=True)
 
 bhp_tuples = list(zip(bhp_open.index, bhp_open["Open"], bhp_open["Close"]))
 rio_tuples = list(zip(rio_open.index, rio_open["Open"], rio_open["Close"]))
@@ -28,8 +28,6 @@ lowest_ratio = bhp_tuples[0][1]/rio_tuples[0][1]
 i = 0
 while i < len(bhp_tuples):
     ratio = bhp_tuples[i][1]/rio_tuples[i][1]
-    # print(f"BHP: {bhp_tuples[i][1]}, RIO:{rio_tuples[i][1]}")
-    # print(f"Ratio: {ratio}")
     if (ratio > highest_ratio):
         highest_ratio = ratio
     if (ratio < lowest_ratio):
@@ -56,7 +54,8 @@ print(f"Lowest ratio: {round(lowest_ratio, 3)}")
 print(f"Average ratio: {round(average_ratio, 3)}")
 print(f"Standard deviation: {round(stdev, 5)}")
 
-# flagging all the days where the ratio was off by more than a standard deviation:
+# flagging all the days where the ratio was off by more than a standard deviation
+# executing trades on these days
 
 i = 0
 anomaly_days = 0
@@ -69,7 +68,7 @@ while i < len(bhp_tuples):
         # now simulating the purchase order
         # day after, buy at the open, sell at the close
         if (bhp_tuples[i][1] > rio_tuples[i][1]):
-            # short $10,000 bhp, long $10,000 rio
+            # short bhp, long rio
             # enter into short position by shorting at the next day's open price with cash available
             bhp_short_position = (budget/2)/bhp_tuples[i + 1][1]
             bhp_pnl = bhp_short_position*bhp_tuples[i + 1][2] - (budget/2)
@@ -79,7 +78,7 @@ while i < len(bhp_tuples):
             profit += rio_pnl
             print(f"The total pnl the day after is: {profit}")
         if (bhp_tuples[i][1] < rio_tuples[i][1]):
-            # long $10,000 bhp, short $10,000 rio
+            # long bhp, short rio
             bhp_long_position = (budget/2) / bhp_tuples[i + 1][1]
             bhp_pnl = (budget/2) - bhp_long_position * bhp_tuples[i + 1][2]
             rio_short_position = (budget/2) / rio_tuples[i + 1][1]
@@ -91,5 +90,3 @@ while i < len(bhp_tuples):
 
 print(f"{anomaly_days} out of {len(bhp_tuples)} were more than 1 stdev out.")
 print(f"Profit using a budget of ${budget} for this strategy was: ${round(profit, 3)}")
-# now for the purchase price calculations - buy the undervalued stock, short the overvalued stock.
-# no dynamic sizing - just purchase fixed amount of long/short
