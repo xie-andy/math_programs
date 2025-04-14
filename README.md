@@ -1,8 +1,8 @@
-# quant_models
+# math_programs
 
-- This repo is a collection of Python programs to experiment with different quantitative trading methods and entry/exit methodologies.
+- This repo is a collection of Python programs to experiment with different quantitative trading methods and entry/exit methodologies and also general math programs.
 
-- To run these on your own computer, clone the repo, install yfinance and then execute the relevant script.
+- To run quant models on your own computer, clone the repo, install yfinance and then execute the relevant script.
 
 # pair_trading.py
 
