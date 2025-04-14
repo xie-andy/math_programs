@@ -60,7 +60,7 @@ print(f"Standard deviation: {round(stdev, 5)}")
 i = 0
 anomaly_days = 0
 profit = 0
-budget = 1000000
+budget = 20000
 while i < len(bhp_tuples):
     if ((abs(bhp_tuples[i][1]/rio_tuples[i][1]) - average_ratio) > stdev):
         anomaly_days += 1
