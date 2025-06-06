@@ -67,6 +67,9 @@ def num_generator(mean, median, low, high, n) -> list[int]:
 
     return(dist)
 
+# are these numbers truly random? they are all paired
+# 
+
 nums = num_generator(mean, median, low, high, n)
 print(nums)
 
