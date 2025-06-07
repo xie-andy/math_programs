@@ -4,6 +4,10 @@
 
 - To run quant models on your own computer, clone the repo, install yfinance and then execute the relevant script.
 
+## atcoder
+
+- Contains archives of atcoder competitions
+
 ## math_sims
 
 - Contains a generator for graphs and a work in progress number set generator where you can specify the mean and median (not 100% random right now)
